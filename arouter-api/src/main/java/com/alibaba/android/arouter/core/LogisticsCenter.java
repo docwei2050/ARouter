@@ -158,6 +158,7 @@ public class LogisticsCenter {
             //billy.qi modified at 2017-12-06
             //load by plugin first
             loadRouterMap();
+            //自动注册
             if (registerByPlugin) {
                 logger.info(TAG, "Load router map by arouter-auto-register plugin.");
             } else {

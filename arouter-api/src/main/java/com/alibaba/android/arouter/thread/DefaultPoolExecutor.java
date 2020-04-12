@@ -39,7 +39,9 @@ public class DefaultPoolExecutor extends ThreadPoolExecutor {
                             MAX_THREAD_COUNT,
                             SURPLUS_THREAD_LIFE,
                             TimeUnit.SECONDS,
+                            //阻塞队列有界的啊64 ,不是常用的LinkedBlockingQueue
                             new ArrayBlockingQueue<Runnable>(64),
+                            //默认的线程池工厂也是被改造了
                             new DefaultThreadFactory());
                 }
             }

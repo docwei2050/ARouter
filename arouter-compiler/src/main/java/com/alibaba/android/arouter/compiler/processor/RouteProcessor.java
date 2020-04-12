@@ -25,6 +25,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -143,6 +144,7 @@ public class RouteProcessor extends BaseProcessor {
             TypeElement type_IProviderGroup = elementUtils.getTypeElement(IPROVIDER_GROUP);
             ClassName routeMetaCn = ClassName.get(RouteMeta.class);
             ClassName routeTypeCn = ClassName.get(RouteType.class);
+            //com.alibaba.android.arouter.facade.model.RouteMeta
 
             /*
                Build input type, format as :
@@ -157,6 +159,9 @@ public class RouteProcessor extends BaseProcessor {
                             WildcardTypeName.subtypeOf(ClassName.get(type_IRouteGroup))
                     )
             );
+            //java.util.Map<java.lang.String, java.lang.Class<? extends com.alibaba.android.arouter.facade.template.IRouteGroup>>
+            logger.info(">>> ParameterizedTypeName: " + inputMapTypeOfRoot.toString()+ " <<<");
+
 
             /*
 
@@ -182,23 +187,25 @@ public class RouteProcessor extends BaseProcessor {
                     .addAnnotation(Override.class)
                     .addModifiers(PUBLIC)
                     .addParameter(rootParamSpec);
-
             //  Follow a sequence, find out metas of group first, generate java file, then statistics them as root.
             for (Element element : routeElements) {
+
                 TypeMirror tm = element.asType();
                 Route route = element.getAnnotation(Route.class);
                 RouteMeta routeMeta;
-
+               //判断一个类是另一个类的子类
                 if (types.isSubtype(tm, type_Activity)) {                 // Activity
                     logger.info(">>> Found activity route: " + tm.toString() + " <<<");
 
                     // Get all fields annotation by @Autowired
                     Map<String, Integer> paramsType = new HashMap<>();
                     Map<String, Autowired> injectConfig = new HashMap<>();
+                    //找字段
                     for (Element field : element.getEnclosedElements()) {
                         if (field.getKind().isField() && field.getAnnotation(Autowired.class) != null && !types.isSubtype(field.asType(), iProvider)) {
                             // It must be field, then it has annotation, but it not be provider.
                             Autowired paramConfig = field.getAnnotation(Autowired.class);
+                            logger.info(">>> paramConfig: " + paramConfig + " <<<");
                             String injectName = StringUtils.isEmpty(paramConfig.name()) ? field.getSimpleName().toString() : paramConfig.name();
                             paramsType.put(injectName, typeUtils.typeExchange(field));
                             injectConfig.put(injectName, paramConfig);
@@ -214,6 +221,7 @@ public class RouteProcessor extends BaseProcessor {
                     routeMeta = new RouteMeta(route, element, RouteType.parse(SERVICE), null);
                 } else if (types.isSubtype(tm, fragmentTm) || types.isSubtype(tm, fragmentTmV4)) {
                     logger.info(">>> Found fragment route: " + tm.toString() + " <<<");
+                    //没看到他处理Fragment的Autowired啊，，那它在Fragment中
                     routeMeta = new RouteMeta(route, element, RouteType.parse(FRAGMENT), null);
                 } else {
                     throw new RuntimeException("ARouter::Compiler >>> Found unsupported class type, type = [" + types.toString() + "].");

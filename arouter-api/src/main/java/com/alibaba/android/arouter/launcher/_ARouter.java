@@ -45,6 +45,7 @@ final class _ARouter {
     private volatile static boolean autoInject = false;
     private volatile static _ARouter instance = null;
     private volatile static boolean hasInit = false;
+
     private volatile static ThreadPoolExecutor executor = DefaultPoolExecutor.getInstance();
     private static Handler mHandler;
     private static Context mContext;
@@ -56,6 +57,7 @@ final class _ARouter {
 
     protected static synchronized boolean init(Application application) {
         mContext = application;
+        //物流中心 找到所有的生成的router并将那个类对应的值放入仓库
         LogisticsCenter.init(mContext, executor);
         logger.info(Consts.TAG, "ARouter init success!");
         hasInit = true;

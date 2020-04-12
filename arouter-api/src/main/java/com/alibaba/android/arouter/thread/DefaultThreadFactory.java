@@ -15,6 +15,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @version 1.0
  * @since 15/12/25 上午10:51
  */
+//在源码基础上加了一点Arouter的标志
 public class DefaultThreadFactory implements ThreadFactory {
     private static final AtomicInteger poolNumber = new AtomicInteger(1);
 

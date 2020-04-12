@@ -14,8 +14,9 @@ public class TypeWrapper<T> {
     protected final Type type;
 
     protected TypeWrapper() {
+        //com.test.Person<com.test.Student>
         Type superClass = getClass().getGenericSuperclass();
-
+        //class com.test.Student
         type = ((ParameterizedType) superClass).getActualTypeArguments()[0];
     }
 

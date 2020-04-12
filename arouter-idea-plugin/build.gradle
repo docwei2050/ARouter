@@ -16,11 +16,7 @@ patchPluginXml {
       """
 }
 
-publishPlugin {
-    username intellijPublishUsername
-    password intellijPublishPassword
-    channels "beta"
-}
+
 
 dependencies {
     compile 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
