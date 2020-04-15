@@ -16,13 +16,14 @@ public class PluginLaunch implements Plugin<Project> {
 
     @Override
     public void apply(Project project) {
+        //1.先判断是不是在主app module  含有appPlugin的就是 apply plugin: 'com.android.application'
         def isApp = project.plugins.hasPlugin(AppPlugin)
         //only application module needs this plugin to generate register code
         if (isApp) {
             Logger.make(project)
 
             Logger.i('Project enable arouter-register plugin')
-
+            //application中的拓展字段类对象
             def android = project.extensions.getByType(AppExtension)
             def transformImpl = new RegisterTransform(project)
 
