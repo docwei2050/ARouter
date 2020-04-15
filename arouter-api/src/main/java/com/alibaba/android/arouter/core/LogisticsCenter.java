@@ -2,6 +2,7 @@ package com.alibaba.android.arouter.core;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 
 import com.alibaba.android.arouter.exception.HandlerException;
 import com.alibaba.android.arouter.exception.NoRouteFoundException;
@@ -155,13 +156,14 @@ public class LogisticsCenter {
 
         try {
             long startInit = System.currentTimeMillis();
+            Log.e("myRouter", "run: "+"走自定义Transform" +"==="+registerByPlugin);
             //billy.qi modified at 2017-12-06
             //load by plugin first
             loadRouterMap();
             //自动注册
-            if (registerByPlugin) {
+         /*   if (registerByPlugin) {
                 logger.info(TAG, "Load router map by arouter-auto-register plugin.");
-            } else {
+            } else {*/
                 Set<String> routerMap;
 
                 // It will rebuild router map every times when debuggable.
@@ -194,7 +196,7 @@ public class LogisticsCenter {
                         ((IProviderGroup) (Class.forName(className).getConstructor().newInstance())).loadInto(Warehouse.providersIndex);
                     }
                 }
-            }
+           /* }*/
 
             logger.info(TAG, "Load root element finished, cost " + (System.currentTimeMillis() - startInit) + " ms.");
 

@@ -15,7 +15,7 @@ import com.alibaba.android.arouter.facade.template.IInterceptor;
  * @version 1.0
  * @since 16/9/9 14:34
  */
-@Interceptor(priority = 90)
+/*@Interceptor(priority = 90)*/
 public class TestInterceptor90 implements IInterceptor {
     /**
      * The operation of this tollgate.

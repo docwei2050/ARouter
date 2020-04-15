@@ -62,21 +62,22 @@ public class ClassUtils {
 
         List<String> paths = getSourcePaths(context);
         final CountDownLatch parserCtl = new CountDownLatch(paths.size());
-
+        Log.e("myRouter", "-paths.size()--==="+paths.size());
         for (final String path : paths) {
+            Log.e("myRouter", "---==="+path);
             DefaultPoolExecutor.getInstance().execute(new Runnable() {
                 @Override
                 public void run() {
                     DexFile dexfile = null;
-
                     try {
                         if (path.endsWith(EXTRACTED_SUFFIX)) {
                             //NOT use new DexFile(path), because it will throw "permission error in /data/dalvik-cache"
                             dexfile = DexFile.loadDex(path, path + ".tmp", 0);
+                            Log.e("myRouter", "zip包 : "+path );
                         } else {
                             dexfile = new DexFile(path);
+                            Log.e("myRouter", "run: "+path );
                         }
-
                         Enumeration<String> dexEntries = dexfile.entries();
                         while (dexEntries.hasMoreElements()) {
                             String className = dexEntries.nextElement();
@@ -126,6 +127,7 @@ public class ClassUtils {
 
 //        如果VM已经支持了MultiDex，就不要去Secondary Folder加载 Classesx.zip了，那里已经么有了
 //        通过是否存在sp中的multidex.version是不准确的，因为从低版本升级上来的用户，是包含这个sp配置的
+        //一般来说是低版本才需要的这个的
         if (!isVMMultidexCapable()) {
             //the total dex numbers
             int totalDexNumber = getMultiDexPreferences(context).getInt(KEY_DEX_NUMBER, 1);
