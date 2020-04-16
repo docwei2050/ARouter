@@ -1,0 +1,19 @@
+apply plugin: 'java-library'
+
+apply plugin: 'groovy'
+repositories {
+    maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+    mavenCentral()
+    jcenter()
+    google()
+}
+
+dependencies {
+    compile gradleApi()
+    compile localGroovy()
+}
+
+dependencies {
+    api 'com.android.tools.build:gradle:3.0.1'
+
+}

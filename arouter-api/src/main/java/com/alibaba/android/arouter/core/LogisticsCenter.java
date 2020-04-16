@@ -64,9 +64,11 @@ public class LogisticsCenter {
     private static void loadRouterMap() {
         registerByPlugin = false;
         //auto generate register code by gradle plugin: arouter-auto-register
-        // looks like below:
+        // looks like below: 不是这样的
         // registerRouteRoot(new ARouter..Root..modulejava());
         // registerRouteRoot(new ARouter..Root..modulekotlin());
+
+        //register(name) 是这样的吧
     }
 
     /**
@@ -161,9 +163,9 @@ public class LogisticsCenter {
             //load by plugin first
             loadRouterMap();
             //自动注册
-         /*   if (registerByPlugin) {
+            if (registerByPlugin) {
                 logger.info(TAG, "Load router map by arouter-auto-register plugin.");
-            } else {*/
+            } else {
                 Set<String> routerMap;
 
                 // It will rebuild router map every times when debuggable.
@@ -196,7 +198,7 @@ public class LogisticsCenter {
                         ((IProviderGroup) (Class.forName(className).getConstructor().newInstance())).loadInto(Warehouse.providersIndex);
                     }
                 }
-           /* }*/
+            }
 
             logger.info(TAG, "Load root element finished, cost " + (System.currentTimeMillis() - startInit) + " ms.");
 
