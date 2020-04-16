@@ -37,7 +37,7 @@ class RegisterCodeGenerator {
      * @return
      */
     private File insertInitCodeIntoJarFile(File jarFile) {
-        Logger.e("在jar里面修改LogisticsCenter 你说6不6    " +file)
+       Logger.e("在jar里面修改LogisticsCenter 你说6不6    " +jarFile)
         if (jarFile) {
             def optJar = new File(jarFile.getParent(), jarFile.name + ".opt")
             if (optJar.exists())
